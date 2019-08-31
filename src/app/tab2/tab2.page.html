@@ -1,7 +1,13 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      IFRI ON LINE -- Informations
+      IFRI ON LINE
+      <span style="float: right;" *ngIf="!activeForm">
+        <ion-icon name="add" (click)="activeForm=true;"></ion-icon>
+      </span>
+      <span style="float: right;" *ngIf="activeForm">
+        <ion-icon name="list" (click)="activeForm=false;"></ion-icon>
+      </span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,7 +21,7 @@
     <!-- End Teacher -->
 
     <!-- Admin  -->
-    <form>
+    <form *ngIf="activeForm">
       <h2>Publier une information</h2>
       <ion-item>
         <ion-label position="floating">Type de l'information</ion-label>
@@ -46,15 +52,15 @@
       </ion-item>
 
       <ion-item>
-          <ion-label>Niveaux d'études concernés</ion-label>
-          <ion-select multiple="true" name="niveauEtudes" [(ngModel)]="niveauEtudes">
-              <ion-select-option value="1">Licence 1</ion-select-option>
-              <ion-select-option value="2">Licence 2</ion-select-option>
-              <ion-select-option value="3">Licence 3</ion-select-option>
-              <ion-select-option value="4">Master 1</ion-select-option>
-              <ion-select-option value="5">Master 2</ion-select-option>
-          </ion-select>
-        </ion-item>
+        <ion-label>Niveaux d'études concernés</ion-label>
+        <ion-select multiple="true" name="niveauEtudes" [(ngModel)]="niveauEtudes">
+          <ion-select-option value="1">Licence 1</ion-select-option>
+          <ion-select-option value="2">Licence 2</ion-select-option>
+          <ion-select-option value="3">Licence 3</ion-select-option>
+          <ion-select-option value="4">Master 1</ion-select-option>
+          <ion-select-option value="5">Master 2</ion-select-option>
+        </ion-select>
+      </ion-item>
 
       <ion-item>
         <ion-label position="floating">Titre de l'information</ion-label>
@@ -63,12 +69,12 @@
 
       <ion-item>
         <ion-label position="floating">Objet de l'information</ion-label>
-        <ion-input  name="object" [(ngModel)]="object"></ion-input>
+        <ion-input name="object" [(ngModel)]="object"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Description ou contenu de l'information</ion-label>
-        <ion-textarea  name="description" [(ngModel)]="description"></ion-textarea>
+        <ion-textarea name="description" [(ngModel)]="description"></ion-textarea>
       </ion-item>
 
       <ion-item *ngIf="active_ni">
@@ -94,6 +100,31 @@
         <ion-icon name="checkmark"></ion-icon> Publier
       </ion-button>
     </form>
+    <!-- End Admin -->
+
+    <!-- Everybody -->
+    <div *ngIf="!activeForm">
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let info of informations" size="12">
+            <ion-card color="primary" (click)="openInfo(info)">
+              <ion-card-header>
+                <h4 style="text-align: center; margin:0px;">{{ getTypeLabel(info.typeInfo) | uppercase }}</h4>
+                <span style="text-align: center">{{ info.title }}</span>
+              </ion-card-header>
+              <ion-card-content>
+                {{info.object }} <hr>
+                {{ info.description }}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col *ngIf="informations.length === 0">
+            <span style="color: red">Aucun information enregistrée ...</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <!-- End -->
     <!-- End Admin -->
   </div>
 </ion-content>

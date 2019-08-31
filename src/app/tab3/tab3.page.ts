@@ -1,6 +1,6 @@
 import { DefaultService } from './../services/default.service';
 import { Subscription } from 'rxjs';
-import { Information } from './../models/info';
+import { Information, Info } from './../models/info';
 import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
@@ -19,6 +19,7 @@ export class Tab3Page {
   destinataire: number = -1;
   specialites: string[] = [];
   niveauEtudes: number[] = [];
+  activeForm: false;
 
   constructor(
     private service: DefaultService,
@@ -27,7 +28,7 @@ export class Tab3Page {
 
   ngOnInit() {
     this.sub = this.service.subject.subscribe((data) => {
-      this.informations = data;
+      this.informations = this.service.filterByType(data, Info.re);
       console.log(this.informations);
     });
   }
@@ -47,7 +48,7 @@ export class Tab3Page {
   }
 
   initForm() {
-    this.description = null;
+    this.description = '';
     this.destinataire = -1;
     this.fileSelected = null;
     this.niveauEtudes = [];
@@ -78,7 +79,8 @@ export class Tab3Page {
         description: this.description,
         title: null,
         object: null,
-        ref: null
+        ref: null,
+        typeInfo: Info.re
       };
       this.service.save(info);
       this.presentToast();

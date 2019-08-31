@@ -1,21 +1,21 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      IFRI ON LINE -- Emploi du temps
+      IFRI ON LINE
+      <span style="float: right;" *ngIf="!activeForm">
+        <ion-icon name="add" (click)="activeForm=true;"></ion-icon>
+      </span>
+      <span style="float: right;" *ngIf="activeForm">
+        <ion-icon name="list" (click)="activeForm=false;"></ion-icon>
+      </span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="igm">
-    <!-- Student  -->
-    <!-- End Student -->
-
-    <!-- Teacher  -->
-    <!-- End Teacher -->
-
     <!-- Admin  -->
-    <form>
+    <form *ngIf="activeForm">
       <h2>Publier un emploi du temps</h2>
 
       <ion-item>
@@ -36,7 +36,7 @@
         <ion-label>Spécialités concernées</ion-label>
         <ion-select multiple="true" name="specialites" [(ngModel)]="specialites">
           <ion-select-option value="GL">Génie logiciel</ion-select-option>
-          <ion-select-option value="SI">Sécuritté informatique</ion-select-option>
+          <ion-select-option value="SI">Sécurité informatique</ion-select-option>
           <ion-select-option value="IM">Internet et Multimedia</ion-select-option>
           <ion-select-option value="SIRI">Systèmes d'Information et Réseaux Informatiques</ion-select-option>
         </ion-select>
@@ -66,6 +66,25 @@
         <ion-icon name="checkmark"></ion-icon> Publier
       </ion-button>
     </form>
+
+    <!-- Everybody -->
+    <div *ngIf="!activeForm">
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let info of informations" size="12">
+            <ion-card color="primary" (click)="openInfo(info)">
+              <h4>
+                Emploi du temps de la semaine du {{ getDate(info.periode) }}
+              </h4>
+            </ion-card>
+          </ion-col>
+          <ion-col *ngIf="informations.length === 0">
+            <span style="color: red">Aucun emploi du temps enregistré...</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <!-- End -->
     <!-- End Admin -->
   </div>
 </ion-content>

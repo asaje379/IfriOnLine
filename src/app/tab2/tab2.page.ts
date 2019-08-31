@@ -38,7 +38,7 @@ export class Tab2Page implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.service.subject.subscribe((data) => {
-      this.informations = data;
+      this.informations = this.service.filterByType(data);
       console.log(this.informations);
     });
   }
@@ -48,6 +48,7 @@ export class Tab2Page implements OnInit, OnDestroy {
   }
 
   onChange(e) {
+    this.typeInfo = e;
     switch (e) {
       case 'CM':
         this.active_cm = true;
@@ -83,9 +84,6 @@ export class Tab2Page implements OnInit, OnDestroy {
       this.niveauEtudes.length === 0 ||
       this.specialites.length === 0 ||
       this.destinataire === -1
-     // this.title === '' ||
-      //this.object === '' ||
-      //this.typeInfo === ''
     ) {
       alert('Veuillez remplir tous les champs');
     } else {
@@ -102,7 +100,8 @@ export class Tab2Page implements OnInit, OnDestroy {
         description: this.description,
         title: this.title,
         object: this.object,
-        ref: this.ref
+        ref: this.ref,
+        typeInfo: this.typeInfo
       };
       this.service.save(info);
       this.presentToast();
@@ -136,6 +135,22 @@ export class Tab2Page implements OnInit, OnDestroy {
       duration: 2000
     });
     toast.present();
+  }
+
+  getTypeLabel(type) {
+    let value;
+    switch (type) {
+      case 'CM':
+        value = 'Communiqué';
+        break;
+      case 'NI':
+        value = 'Note d\'information';
+        break;
+      case 'EVENT':
+        value = 'Evénement'
+        break;
+    }
+    return value;
   }
 
 } 

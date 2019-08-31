@@ -12,4 +12,13 @@ export interface Information {
     admin_id: number;
     niveauEtudes: number[];
     specialites: string[];
+    typeInfo: string
+}
+
+export class Info {
+    static cm = 'CM';
+    static ni = 'NI';
+    static ev = 'EVENT';
+    static re = 'RE';
+    static emp = 'EMP';
 }

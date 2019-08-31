@@ -3,11 +3,11 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   { path: 'tab4', loadChildren: './tab4/tab4.module#Tab4PageModule' },
-  { path: 'auth', loadChildren: './auth/auth.module#AuthPageModule' }
+  { path: '', loadChildren: './auth/auth.module#AuthPageModule' }
 ];
 @NgModule({
   imports: [

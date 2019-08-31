@@ -6,8 +6,8 @@
   height: 100%;
   overflow: auto;
 }
-form {
-  margin: 3%;
+form{
+  margin: 1%;
   background-color: #fff;
   padding-bottom: 10px;
   padding-top: 20px;
@@ -21,5 +21,15 @@ form {
   span {
     margin: 20px;
     padding-bottom: 10px;
+  }
+}
+
+div {
+  background-color: #fff;
+  padding: 2%;
+
+  h4 {
+    padding: 3%; 
+    text-align: center;
   }
 }

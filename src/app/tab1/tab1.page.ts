@@ -1,5 +1,5 @@
 import { ToastController } from '@ionic/angular';
-import { Information } from './../models/info';
+import { Information, Info } from './../models/info';
 import { DefaultService } from './../services/default.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -19,6 +19,7 @@ export class Tab1Page implements OnInit, OnDestroy {
   destinataire: number = -1;
   specialites: string[] = [];
   niveauEtudes: number[] = [];
+  activeForm: false;
 
   constructor(
     private service: DefaultService,
@@ -27,7 +28,7 @@ export class Tab1Page implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.service.subject.subscribe((data) => {
-      this.informations = data;
+      this.informations = this.service.filterByType(data, Info.emp);
       console.log(this.informations);
     });
   }
@@ -78,7 +79,8 @@ export class Tab1Page implements OnInit, OnDestroy {
         periode: new Date(this.periode),
         title: null,
         object: null,
-        ref: null
+        ref: null,
+        typeInfo: Info.emp
       };
       this.service.save(info);
       this.presentToast();
@@ -97,5 +99,25 @@ export class Tab1Page implements OnInit, OnDestroy {
       duration: 2000
     });
     toast.present();
+  }
+
+  async presentClickToast(msg) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  getDate(date: Date) {
+    const mth = (date.getMonth() > 8) ? (date.getMonth()+1) : ('0'+(date.getMonth()+1));
+    return date.getDate() + '-' + mth + '-' + date.getFullYear();
+  }
+
+  openInfo(info: Information) {
+    this.presentClickToast('Téléchargement du fichier '+info.file.name+' en cours ...');
+    setTimeout(() => {
+      this.presentClickToast('Téléchargement terminé ...');
+    }, 1000);
   }
 }

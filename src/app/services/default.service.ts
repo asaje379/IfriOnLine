@@ -1,4 +1,4 @@
-import { Information } from './../models/info';
+import { Information, Info } from './../models/info';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -8,17 +8,13 @@ import { Subject } from 'rxjs';
 export class DefaultService {
 
   informations: Information[] = [];
+  filteredInfos: Information[] = [];
   subject = new Subject<Information[]>();
 
   constructor() { }
 
   emit() {
     this.subject.next(this.informations);
-  }
-
-  getAll() {
-    this.emit();
-    return this.informations;
   }
 
   getById(id) {
@@ -37,5 +33,23 @@ export class DefaultService {
       return info.id === id;
     });
     this.informations.splice(index, 1);
+  }
+
+  filterByType(array: Information[], type?: string) {
+    let selected = [];
+    if (type) {
+      for (let item of array) {
+        if (item.typeInfo == type) {
+          selected.push(item);
+        }
+      }
+    } else {
+      for (let item of array) {
+        if (item.typeInfo != Info.emp && item.typeInfo != Info.re) {
+          selected.push(item);
+        }
+      }
+    }
+    return selected;
   }
 }

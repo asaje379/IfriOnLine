@@ -1,9 +1,25 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>auth</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>IFRI ON LINE</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div class="logo">
+    <div>Io</div>
+    <div>IFRIonline</div>
+  </div>
+  <form>
+    <ion-item>
+      <ion-icon name="person"></ion-icon> <span style="margin:10px;"></span>
+      <ion-input type="tel" name="matricule" placeholder="Numéro matricule" [(ngModel)]="matricule"></ion-input>
+    </ion-item> <br>
+    <ion-item>
+      <ion-icon name="lock"></ion-icon> <span style="margin:10px;"></span>
+      <ion-input type="password" name="password" placeholder="Mot de passe" [(ngModel)]="password"></ion-input>
+    </ion-item>
+    <ion-button (click)="onSubmit()" expand="block">
+      <ion-icon name="checkmark"></ion-icon> S'authentifier
+    </ion-button>
+  </form>
 </ion-content>

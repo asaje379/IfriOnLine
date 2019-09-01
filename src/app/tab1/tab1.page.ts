@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { ToastController } from '@ionic/angular';
 import { Information, Info } from './../models/info';
 import { DefaultService } from './../services/default.service';
@@ -23,7 +24,8 @@ export class Tab1Page implements OnInit, OnDestroy {
 
   constructor(
     private service: DefaultService,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -80,7 +82,8 @@ export class Tab1Page implements OnInit, OnDestroy {
         title: null,
         object: null,
         ref: null,
-        typeInfo: Info.emp
+        typeInfo: Info.emp,
+        image: null
       };
       this.service.save(info);
       this.presentToast();
@@ -119,5 +122,9 @@ export class Tab1Page implements OnInit, OnDestroy {
     setTimeout(() => {
       this.presentClickToast('Téléchargement terminé ...');
     }, 1000);
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

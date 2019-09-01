@@ -2,12 +2,16 @@
   <ion-toolbar color="primary">
     <ion-title>
       IFRI ON LINE
-      <span style="float: right;" *ngIf="!activeForm">
+      <span style="float: right;">
+        <ion-icon color="danger" name="power" (click)="logout()"></ion-icon>
+      </span>
+      <span style="float: right;" *ngIf="!activeForm && !authService.userCanSeeRes()">
         <ion-icon name="add" (click)="activeForm=true;"></ion-icon>
       </span>
-      <span style="float: right;" *ngIf="activeForm">
+      <span style="float: right;" *ngIf="activeForm && !authService.userCanSeeRes()">
         <ion-icon name="list" (click)="activeForm=false;"></ion-icon>
       </span>
+      
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -85,6 +89,15 @@
       <ion-item *ngIf="active_ev">
         <ion-label position="floating">Date de l'événement</ion-label>
         <ion-datetime displayFormat="DD-MM-YYYY H:mm" name="dateEven" [(ngModel)]="dateEven"></ion-datetime>
+      </ion-item>
+
+      <ion-item *ngIf="active_ev">
+        <ion-label>Image de couverture</ion-label>
+        <input style="display: none" type="file" id="imageInput" (change)="onImageSelected($event.target.files[0])">
+        <ion-button (click)="pickImage()" color="danger">
+          <ion-icon name="navigate"></ion-icon> Parcourir
+        </ion-button> <br>
+        <span>{{ selectedImage }}</span>
       </ion-item>
 
       <ion-item *ngIf="!active_cm">

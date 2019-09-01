@@ -1,3 +1,5 @@
+import { User, Role } from './../models/user';
+import { AuthService } from './../services/auth.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,8 +9,11 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  isUserStudent: boolean = true; 
+  user: User;
 
-  constructor() {}
-
+  constructor(
+    private authService: AuthService
+  ) {
+    this.user = this.authService.user;
+  }
 }

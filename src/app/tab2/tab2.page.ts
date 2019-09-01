@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Subscription } from 'rxjs';
 import { Information } from './../models/info';
 import { ToastController } from '@ionic/angular';
@@ -28,10 +29,14 @@ export class Tab2Page implements OnInit, OnDestroy {
   object: string = '';
   ref: string = '';
   dateEven: Date = null;
+  image: File = null;
+  selectedImage = 'Aucun ...';
+  imageSelected: File = null;
 
   constructor(
     private service: DefaultService,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private authService: AuthService
   ) {
     this.getNow();
   }
@@ -76,7 +81,7 @@ export class Tab2Page implements OnInit, OnDestroy {
     this.fileSelected = null;
     this.niveauEtudes = [];
     this.specialites = [];
-    this.selectedFile = 'Aucun ...';
+    this.selectedFile = this.selectedImage = 'Aucun ...';
   }
 
   onSubmit() {
@@ -101,7 +106,8 @@ export class Tab2Page implements OnInit, OnDestroy {
         title: this.title,
         object: this.object,
         ref: this.ref,
-        typeInfo: this.typeInfo
+        typeInfo: this.typeInfo,
+        image: null
       };
       this.service.save(info);
       this.presentToast();
@@ -122,6 +128,16 @@ export class Tab2Page implements OnInit, OnDestroy {
   onFileSelected(e) {
     this.selectedFile = e.name;
     this.fileSelected = e;
+  }
+
+  pickImage() {
+    let pf = document.getElementById('imageInput');
+    pf.click();
+  }
+
+  onImageSelected(e) {
+    this.selectedImage = e.name;
+    this.imageSelected = e;
   }
 
   genId() {
@@ -153,4 +169,7 @@ export class Tab2Page implements OnInit, OnDestroy {
     return value;
   }
 
+  logout() {
+    this.authService.logout();
+  }
 } 

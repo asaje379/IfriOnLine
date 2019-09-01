@@ -23,11 +23,10 @@ export class AuthPage implements OnInit {
   }
 
   onSubmit() {
-    if (this.authService.login({
-      matricule: this.matricule,
-      password: this.password
-    })) {
+    if (this.authService.login(this.matricule, this.password)) {
       this.router.navigate(['/home/tabs/tab1']);
+      this.matricule = '';
+      this.password = '';
     } else {
       this.matricule = '';
       this.password = '';

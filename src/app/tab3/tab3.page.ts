@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { DefaultService } from './../services/default.service';
 import { Subscription } from 'rxjs';
 import { Information, Info } from './../models/info';
@@ -23,7 +24,8 @@ export class Tab3Page {
 
   constructor(
     private service: DefaultService,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -80,7 +82,8 @@ export class Tab3Page {
         title: null,
         object: null,
         ref: null,
-        typeInfo: Info.re
+        typeInfo: Info.re,
+        image: null
       };
       this.service.save(info);
       this.presentToast();
@@ -99,5 +102,9 @@ export class Tab3Page {
       duration: 2000
     });
     toast.present();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

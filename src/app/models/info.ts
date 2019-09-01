@@ -12,7 +12,8 @@ export interface Information {
     admin_id: number;
     niveauEtudes: number[];
     specialites: string[];
-    typeInfo: string
+    typeInfo: string;
+    image: File;
 }
 
 export class Info {

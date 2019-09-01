@@ -22,4 +22,5 @@ export class Info {
     static ev = 'EVENT';
     static re = 'RE';
     static emp = 'EMP';
+    static res = 'RES';
 }

@@ -53,4 +53,12 @@ export class AuthService {
       return false;
     }
   }
+
+  isTeacher() {
+    if (this.user.role == Role.teacher) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

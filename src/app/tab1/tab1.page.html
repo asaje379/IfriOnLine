@@ -2,14 +2,14 @@
   <ion-toolbar color="primary">
     <ion-title>
       IFRI ON LINE
+      <span style="float: right; margin: 0px 5px 0px 5px;">
+        <ion-icon color="dark" name="power" (click)="logout()"></ion-icon>
+      </span>
       <span style="float: right;" *ngIf="!activeForm && !authService.userCanSeeRes()">
         <ion-icon name="add" (click)="activeForm=true;"></ion-icon>
       </span>
       <span style="float: right;" *ngIf="activeForm && !authService.userCanSeeRes()">
         <ion-icon name="list" (click)="activeForm=false;"></ion-icon>
-      </span>
-      <span style="float: right;">
-        <ion-icon name="power" (click)="logout()"></ion-icon>
       </span>
     </ion-title>
   </ion-toolbar>

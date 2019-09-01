@@ -1,11 +1,63 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      IFRI ON LINE -- Ressources
+      IFRI ON LINE
+      <span style="float: right; margin: 0px 5px 0px 5px;">
+        <ion-icon color="dark" name="power" (click)="logout()"></ion-icon>
+      </span>
+      <span style="float: right;" *ngIf="!activeForm && authService.isTeacher()">
+        <ion-icon name="add" (click)="activeForm=true;"></ion-icon>
+      </span>
+      <span style="float: right;" *ngIf="activeForm && authService.isTeacher()">
+        <ion-icon name="list" (click)="activeForm=false;"></ion-icon>
+      </span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="igm">
+    <!-- Admin  -->
+    <form *ngIf="activeForm">
+      <h2>Publier une ressource</h2>
 
+      <ion-item>
+        <ion-label position="floating">Description ou contenu de l'information</ion-label>
+        <ion-textarea name="description" [(ngModel)]="description"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Fichier à uploader</ion-label>
+        <input style="display: none" type="file" id="fileInput" (change)="onFileSelected($event.target.files[0])">
+        <ion-button (click)="pickFile()" color="danger">
+          <ion-icon name="navigate"></ion-icon> Parcourir
+        </ion-button>
+      </ion-item>
+      <span>{{ selectedFile }}</span> <br><br>
+
+      <ion-button expand="block" (click)="onSubmit()">
+        <ion-icon name="checkmark"></ion-icon> Publier
+      </ion-button>
+    </form>
+
+    <!-- Everybody -->
+    <div *ngIf="!activeForm">
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let info of informations" size="12">
+            <ion-card color="primary" (click)="openInfo(info)">
+              <h4>
+                {{ info.description }}
+              </h4>
+            </ion-card>
+          </ion-col>
+          <ion-col *ngIf="informations.length === 0">
+            <span style="color: red">Aucune ressource enregistrée...</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <!-- End -->
+    <!-- End Admin -->
+  </div>
 </ion-content>
